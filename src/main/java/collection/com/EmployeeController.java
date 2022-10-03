@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/employee")
@@ -43,7 +44,7 @@ public class EmployeeController {
 
     @GetMapping(path = "/getall")
     @ResponseStatus(HttpStatus.OK)
-    public List<Employee> getAllEmployee() {
+    public Map<Integer, Employee> getAllEmployee() {
         return employeeService.getAllEmployee();
     }
 

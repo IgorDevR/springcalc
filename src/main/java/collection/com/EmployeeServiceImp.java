@@ -2,13 +2,13 @@ package collection.com;
 
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class EmployeeServiceImp implements EmployeeService {
 
-    List<Employee> employees = new ArrayList<>();
+    private Map<Integer, Employee> employees = new HashMap<>();
+    private static Integer ID = 1;
 
     @Override
     public Employee addEmployee(String firstName, String lastName) {
@@ -19,18 +19,19 @@ public class EmployeeServiceImp implements EmployeeService {
         }
 
         Employee emp = new Employee(firstName, lastName);
-        employees.add(emp);
-        return emp;
+        employees.put(ID, emp);
+        return employees.get(ID++);
 
     }
 
     @Override
     public Employee removeEmployee(String firstName, String lastName) {
 
-        for (Employee emp : employees) {
-            if (emp.getFirstName().contains(firstName) && emp.getLastName().contains(lastName)) {
-                employees.remove(emp);
-                return emp;
+        for (Map.Entry<Integer, Employee> emp : employees.entrySet()) {
+            var q = emp;
+            if (emp.getValue().getFirstName().equals(firstName) && emp.getValue().getLastName().equals(lastName)) {
+                employees.remove(emp.getKey());
+                return emp.getValue();
             }
         }
         throw new EmployeeAlreadyAddedException();
@@ -39,9 +40,9 @@ public class EmployeeServiceImp implements EmployeeService {
     @Override
     public Employee findEmployee(String firstName, String lastName) {
 
-        for (Employee emp : employees) {
-            if (emp.getFirstName().contains(firstName) && emp.getLastName().contains(lastName)) {
-                return emp;
+        for (Map.Entry<Integer, Employee> emp : employees.entrySet()) {
+            if (emp.getValue().getFirstName().equals(firstName) && emp.getValue().getLastName().equals(lastName)) {
+                return emp.getValue();
             }
         }
         throw new EmployeeNotFoundException();
@@ -49,7 +50,7 @@ public class EmployeeServiceImp implements EmployeeService {
     }
 
     @Override
-    public List<Employee> getAllEmployee() {
+    public Map<Integer, Employee> getAllEmployee() {
         return employees;
     }
 
