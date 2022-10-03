@@ -33,7 +33,9 @@ public class EmployeeServiceImp implements EmployeeService {
                 employees.remove(emp.getKey());
                 return emp.getValue();
             }
+
         }
+
         throw new EmployeeAlreadyAddedException();
     }
 
