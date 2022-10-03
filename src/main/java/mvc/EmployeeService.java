@@ -13,5 +13,4 @@ public interface EmployeeService {
 
     Map<Integer, Employee> getAllEmployee();
 
-
 }
